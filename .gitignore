@@ -7,3 +7,5 @@ Brand_Assets/.DS_Store
 Skills/
 CLAUDE.md
 package-lock.json
+.env
+.mcp.json
