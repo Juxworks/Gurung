@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Gurung Tea Global Collection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── CSS Variables ── */
+    :root, [data-mode="dark"] {
+      --bg:           #0C0A08;
+      --bg-mid:       #161310;
+      --bg-up:        #201C18;
+      --border:       #2A2520;
+      --text:         #F0EDE6;
+      --text-muted:   rgba(240,237,230,.5);
+      --text-dim:     rgba(240,237,230,.22);
+      --orange:       #FF5000;
+      --teal:         #00A383;
+      --tag-bg:       #201C18;
+      --card-bg:      #161310;
+      --coll-bg:      linear-gradient(135deg, rgba(255,80,0,.13) 0%, rgba(255,80,0,.04) 100%);
+      --coll-border:  rgba(255,80,0,.25);
+      --nav-bg:       rgba(12,10,8,.96);
+      --grain-op:     .032;
+    }
+    [data-mode="light"] {
+      --bg:           #FAF7F2;
+      --bg-mid:       #F2EDE4;
+      --bg-up:        #EDE6D8;
+      --border:       #D8D0C0;
+      --text:         #16130F;
+      --text-muted:   rgba(22,19,15,.55);
+      --text-dim:     rgba(22,19,15,.28);
+      --orange:       #C44000;
+      --teal:         #007A62;
+      --tag-bg:       #EDE6D8;
+      --card-bg:      #F2EDE4;
+      --coll-bg:      linear-gradient(135deg, rgba(196,64,0,.10) 0%, rgba(196,64,0,.03) 100%);
+      --coll-border:  rgba(196,64,0,.25);
+      --nav-bg:       rgba(250,247,242,.96);
+      --grain-op:     .018;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      cursor: none;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    /* ── Grain ── */
+    body::after {
+      content: '';
+      position: fixed; inset: -100%;
+      width: 300%; height: 300%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: var(--grain-op);
+      pointer-events: none; z-index: 9000;
+      animation: grain 7s steps(8) infinite;
+    }
+    @keyframes grain {
+      0%   { transform: translate(0,0); }
+      12%  { transform: translate(-6%,-12%); }
+      25%  { transform: translate(10%,-5%); }
+      37%  { transform: translate(-4%,18%); }
+      50%  { transform: translate(14%,6%); }
+      62%  { transform: translate(-9%,14%); }
+      75%  { transform: translate(5%,-18%); }
+      87%  { transform: translate(-14%,4%); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* ── Custom cursor ── */
+    #cur-dot {
+      position: fixed; pointer-events: none; z-index: 9999;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--orange);
+      transform: translate(-50%,-50%);
+      transition: width .15s ease, height .15s ease, background .3s;
+    }
+    #cur-ring {
+      position: fixed; pointer-events: none; z-index: 9998;
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(255,80,0,.4);
+      transform: translate(-50%,-50%);
+      transition: width .25s ease, height .25s ease, border-color .3s;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 18px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background .3s, border-color .3s;
+    }
+    .nav-logo img {
+      height: 40px; display: block;
+      transition: opacity .2s;
+    }
+    .nav-logo:hover img { opacity: .8; }
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--text-muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cart {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--orange); color: #0C0A08;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 10px 22px; border-radius: 2px;
+      border: none; cursor: none;
+      transition: opacity .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    [data-mode="light"] .nav-cart { color: #FAF7F2; }
+    .nav-cart:hover { opacity: .88; transform: translateY(-1px); }
+    .nav-cart-count {
+      background: rgba(0,0,0,.2); color: inherit;
+      font-size: 10px; font-weight: 800;
+      min-width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 3px;
+    }
+
+    /* ── Mode toggle ── */
+    .mode-toggle {
+      display: flex; align-items: center;
+      background: var(--bg-up);
+      border: 1px solid var(--border);
+      border-radius: 3px; overflow: hidden;
+      margin-right: 14px;
+    }
+    .mode-btn {
+      padding: 7px 13px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      border: none; cursor: none;
+      color: var(--text-muted); background: transparent;
+      transition: background .2s, color .2s;
+    }
+    .mode-btn.active { background: var(--orange); color: #0C0A08; }
+    [data-mode="light"] .mode-btn.active { color: #FAF7F2; }
+
+    /* ── Page layout ── */
+    .page-wrap {
+      padding-top: 77px; /* nav height */
+      min-height: 100vh;
+    }
+
+    /* ── Hero band ── */
+    .hero-band {
+      padding: 52px 56px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 14px;
+    }
+    .hero-eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--orange); }
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 68px);
+      line-height: .92; letter-spacing: -.04em;
+      color: var(--text);
+    }
+    .hero-title .accent { color: var(--orange); }
+    .hero-right { text-align: right; flex-shrink: 0; }
+    .hero-ghost-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 96px;
+      letter-spacing: -.05em; line-height: 1;
+      color: var(--text); opacity: .04;
+      margin-bottom: -12px; user-select: none;
+    }
+    .sort-row {
+      display: flex; align-items: center; gap: 8px; margin-top: 12px;
+    }
+    .sort-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; color: var(--text-muted); letter-spacing: .12em; text-transform: uppercase;
+    }
+    .sort-btn {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--text); background: transparent;
+      padding: 5px 13px; border-radius: 2px; cursor: none;
+      transition: border-color .2s, background .2s;
+    }
+    .sort-btn:hover, .sort-btn.active {
+      border-color: var(--text-muted); background: var(--bg-up);
+    }
+
+    /* ── Shop layout ── */
+    .shop-layout {
+      display: flex; align-items: flex-start;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 240px; flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      padding: 32px 24px;
+      position: sticky; top: 77px;
+      max-height: calc(100vh - 77px);
+      overflow-y: auto;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .filter-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 24px;
+    }
+    .filter-group { margin-bottom: 28px; }
+    .filter-group-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 12px; padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Collections block */
+    .filter-group.collections {
+      background: var(--coll-bg);
+      border: 1px solid var(--coll-border);
+      border-radius: 4px;
+      padding: 13px 14px 15px;
+      margin-left: -4px; margin-right: -4px;
+      margin-bottom: 28px;
+    }
+    .filter-group.collections .filter-group-label {
+      color: var(--orange);
+      border-bottom-color: var(--coll-border);
+    }
+    .series-divider { height: 1px; background: var(--coll-border); opacity: .5; margin: 10px 0; }
+
+    .filter-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 11px; cursor: none;
+    }
+    .filter-item:last-child { margin-bottom: 0; }
+    .filter-item label { cursor: none; display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+
+    .checkbox-wrap { position: relative; flex-shrink: 0; margin-top: 1px; }
+    .checkbox-wrap input[type="checkbox"] {
+      appearance: none; -webkit-appearance: none;
+      width: 14px; height: 14px;
+      border: 1px solid var(--border); border-radius: 2px;
+      background: var(--bg); cursor: none;
+      transition: background .15s, border-color .15s;
+    }
+    .checkbox-wrap input[type="checkbox"]:checked {
+      background: var(--orange); border-color: var(--orange);
+    }
+    .checkbox-wrap input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute; left: 3px; top: 1px;
+      width: 7px; height: 4px;
+      border-left: 1.5px solid #0C0A08; border-bottom: 1.5px solid #0C0A08;
+      transform: rotate(-45deg);
+    }
+    [data-mode="light"] .checkbox-wrap input[type="checkbox"]:checked::after {
+      border-color: #FAF7F2;
+    }
+    .filter-item-text { flex: 1; }
+    .filter-item-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3;
+    }
+    .filter-item-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px; color: var(--text-muted); margin-top: 1px;
+    }
+    .filter-item-count {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; color: var(--text-muted); margin-left: auto; flex-shrink: 0;
+    }
+    .active-pill {
+      display: inline-block; font-size: 7px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 2px 6px; border-radius: 20px; margin-left: 5px;
+      background: var(--coll-bg); color: var(--orange); border: 1px solid var(--coll-border);
+      vertical-align: middle; line-height: 1.4;
+    }
+    .coming-soon {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; color: var(--text-dim); font-style: italic;
+    }
+
+    /* Price range */
+    .price-range-track {
+      height: 3px; background: var(--border); border-radius: 2px; margin: 12px 0 8px;
+    }
+    .price-range-fill {
+      height: 100%; background: var(--orange); border-radius: 2px; width: 100%;
+    }
+    .price-range-labels { display: flex; justify-content: space-between; }
+    .price-range-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 600; color: var(--text);
+    }
+
+    .clear-btn {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; color: var(--text-dim); letter-spacing: .1em; text-transform: uppercase;
+      background: none; border: none; cursor: none; margin-top: 14px;
+      text-decoration: underline; display: block;
+      transition: color .2s;
+    }
+    .clear-btn:hover { color: var(--text-muted); }
+
+    /* ── Product grid area ── */
+    .grid-area { flex: 1; padding: 28px 32px 80px; }
+
+    .results-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .results-text {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .results-text strong { color: var(--text); font-weight: 700; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    /* ── Product card ── */
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color .25s ease;
+    }
+    .product-card:hover { border-color: var(--text-dim); }
+    .product-card[data-hidden] { display: none; }
+
+    .card-img-wrap {
+      width: 100%; aspect-ratio: 1;
+      background: var(--bg-up);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-img {
+      width: 84%; height: 84%;
+      object-fit: contain; display: block;
+      transition: transform .55s cubic-bezier(.25,.46,.45,.94);
+    }
+    .product-card:hover .card-img { transform: scale(1.06); }
+
+    .card-city-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--orange); padding: 4px 9px; border-radius: 2px;
+      border: 1px solid var(--coll-border);
+    }
+    .card-series-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--teal); padding: 4px 8px; border-radius: 2px;
+      border: 1px solid rgba(0,163,131,.28);
+    }
+
+    .card-body { padding: 18px 18px 20px; flex: 1; display: flex; flex-direction: column; }
+    .card-city-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 5px;
+    }
+    .card-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+    .card-tag {
+      font-family: 'Manrope', sans-serif;
+      font-size: 9px; font-weight: 600; color: var(--text);
+      background: var(--tag-bg); border: 1px solid var(--border);
+      padding: 3px 9px; border-radius: 2px; letter-spacing: .05em;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between; margin-top: auto;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .card-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--text);
+    }
+    .card-price sub {
+      font-size: 10px; font-weight: 500; color: var(--text-muted);
+      margin-left: 2px; vertical-align: baseline;
+    }
+    .add-btn {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--orange); color: #0C0A08;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 10px 16px; border-radius: 2px; border: none; cursor: none;
+      transition: opacity .2s, transform .2s cubic-bezier(.34,1.56,.64,1);
+    }
+    [data-mode="light"] .add-btn { color: #FAF7F2; }
+    .add-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .add-btn svg { transition: transform .2s; }
+    .add-btn:hover svg { transform: rotate(90deg); }
+
+    /* ── Cart Drawer ── */
+    .cart-overlay {
+      position: fixed; inset: 0; z-index: 600;
+      background: rgba(12,10,8,.5);
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+    .cart-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 700;
+      width: 360px;
+      background: var(--bg-mid);
+      border-left: 1px solid var(--border);
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.16,1,.3,1);
+      display: flex; flex-direction: column;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+
+    .cart-header {
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text);
+    }
+    .cart-close {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border); border-radius: 50%;
+      background: transparent; cursor: none; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, color .2s;
+    }
+    .cart-close:hover { border-color: var(--text-muted); color: var(--text); }
+
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .cart-items::-webkit-scrollbar { width: 3px; }
+    .cart-items::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .cart-empty {
+      text-align: center; padding: 60px 0;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px; color: var(--text-dim);
+    }
+    .cart-empty-icon { font-size: 32px; margin-bottom: 12px; opacity: .4; }
+
+    .cart-item {
+      display: flex; gap: 14px; margin-bottom: 18px;
+      padding-bottom: 18px; border-bottom: 1px solid var(--border);
+    }
+    .cart-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .cart-item-img {
+      width: 60px; height: 60px; object-fit: contain;
+      background: var(--bg-up); border-radius: 2px; flex-shrink: 0; padding: 4px;
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-city {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 2px;
+    }
+    .cart-item-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px;
+    }
+    .cart-qty-row { display: flex; align-items: center; gap: 10px; }
+    .qty-btn {
+      width: 22px; height: 22px;
+      border: 1px solid var(--border); border-radius: 2px;
+      background: transparent; cursor: none; color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; line-height: 1;
+      transition: border-color .2s;
+    }
+    .qty-btn:hover { border-color: var(--text-muted); }
+    .qty-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; color: var(--text); min-width: 16px; text-align: center;
+    }
+    .cart-item-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+      margin-left: auto; align-self: flex-start; flex-shrink: 0;
+    }
+    .remove-btn {
+      background: none; border: none; cursor: none;
+      font-size: 10px; color: var(--text-dim); text-decoration: underline;
+      font-family: 'Manrope', sans-serif; padding: 0;
+      transition: color .2s;
+    }
+    .remove-btn:hover { color: var(--text-muted); }
+
+    .cart-footer {
+      padding: 20px 24px 28px;
+      border-top: 1px solid var(--border);
+    }
+    .cart-subtotal-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .cart-subtotal-label {
+      font-family: 'Manrope', sans-serif; font-size: 13px; color: var(--text-muted);
+    }
+    .cart-subtotal-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: var(--text);
+    }
+    .checkout-btn {
+      width: 100%; background: var(--orange); color: #0C0A08;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      padding: 16px; border-radius: 2px; border: none; cursor: none;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: opacity .2s, transform .2s;
+    }
+    [data-mode="light"] .checkout-btn { color: #FAF7F2; }
+    .checkout-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .continue-btn {
+      width: 100%; background: transparent; color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      padding: 12px; border-radius: 2px;
+      border: 1px solid var(--border); cursor: none;
+      margin-top: 8px;
+      transition: border-color .2s, color .2s;
+    }
+    .continue-btn:hover { border-color: var(--text-dim); color: var(--text); }
+
+    /* ── Global CTA band ── */
+    .cta-band {
+      background: var(--orange);
+      padding: 80px 56px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-bg-word {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 22vw; letter-spacing: -.04em;
+      color: rgba(0,0,0,.06);
+      white-space: nowrap; pointer-events: none; user-select: none; line-height: 1;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: clamp(36px, 5.5vw, 78px);
+      letter-spacing: -.04em; line-height: .92; color: var(--bg); margin-bottom: 18px;
+    }
+    .cta-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px; color: rgba(12,10,8,.6); margin-bottom: 36px;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--bg); color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      padding: 15px 32px; border-radius: 2px; text-decoration: none;
+      transition: opacity .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .cta-btn:hover { opacity: .88; transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    .footer-main {
+      padding: 60px 56px 44px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px;
+    }
+    .f-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 16px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .f-tagline {
+      font-family: 'Manrope', sans-serif; font-size: 13px; line-height: 1.65;
+      color: var(--text-dim);
+    }
+    .f-col h4 {
+      font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px;
+    }
+    .f-col ul { list-style: none; }
+    .f-col li { margin-bottom: 10px; }
+    .f-col a {
+      font-family: 'Manrope', sans-serif; font-size: 13px;
+      color: var(--text-muted); text-decoration: none; transition: color .2s;
+    }
+    .f-col a:hover { color: var(--text); }
+    .footer-bottom {
+      padding: 20px 56px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-family: 'Manrope', sans-serif; font-size: 11px; color: var(--text-dim); }
+
+    /* ── Reveal ── */
+    .rv { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: .08s; }
+    .rv.d2 { transition-delay: .16s; }
+    .rv.d3 { transition-delay: .24s; }
+
+    /* ── No results ── */
+    .no-results {
+      grid-column: 1/-1; text-align: center; padding: 80px 0;
+      font-family: 'Manrope', sans-serif; font-size: 14px; color: var(--text-dim);
+      display: none;
+    }
+    .no-results.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
+
+  <!-- Cart overlay -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+  <!-- Cart drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <span class="cart-title">Your Cart</span>
+      <button class="cart-close" onclick="closeCart()">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <div class="cart-empty-icon">☕</div>
+        Your cart is empty.<br>Add a tin to begin.
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal-row">
+        <span class="cart-subtotal-label">Subtotal</span>
+        <span class="cart-subtotal-amount" id="cartSubtotal">$0</span>
+      </div>
+      <button class="checkout-btn">
+        Checkout
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <button class="continue-btn" onclick="closeCart()">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index2.html" class="nav-logo">
+      <img src="Brand_Assets/logo_Gurung.avif" alt="Gurung Tea">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index2.html#collection">Collection</a></li>
+      <li><a href="index2.html#origin">Our Origin</a></li>
+      <li><a href="index2.html#values">Philosophy</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:0;">
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btnDark" onclick="setMode('dark')">Dark</button>
+        <button class="mode-btn" id="btnLight" onclick="setMode('light')">Light</button>
+      </div>
+      <button class="nav-cart" onclick="toggleCart()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+        Cart
+        <span class="nav-cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- ── Hero band ── -->
+    <div class="hero-band">
+      <div>
+        <div class="hero-eyebrow">The Global Collection</div>
+        <h1 class="hero-title rv">Somewhere<br>in Every <span class="accent">Cup.</span></h1>
+      </div>
+      <div class="hero-right rv d1">
+        <div class="hero-ghost-num">09</div>
+        <div class="sort-row">
+          <span class="sort-label">Sort:</span>
+          <button class="sort-btn active" data-sort="newest" onclick="setSort(this,'newest')">Newest</button>
+          <button class="sort-btn" data-sort="az" onclick="setSort(this,'az')">A–Z</button>
+          <button class="sort-btn" data-sort="price" onclick="setSort(this,'price')">Price ↑</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Shop layout ── -->
+    <div class="shop-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="filter-heading">Filter</div>
+
+        <!-- Collections -->
+        <div class="filter-group collections">
+          <div class="filter-group-label">Collections</div>
+
+          <div class="filter-item">
+            <label>
+              <div class="checkbox-wrap">
+                <input type="checkbox" data-filter="collection" value="original" onchange="applyFilters()">
+              </div>
+              <div class="filter-item-text">
+                <div class="filter-item-name">Original Series</div>
+                <div class="filter-item-sub">Himalayan herbal blends</div>
+              </div>
+              <span class="filter-item-count">6</span>
+            </label>
+          </div>
+
+          <div class="series-divider"></div>
+
+          <div class="filter-item">
+            <label>
+              <div class="checkbox-wrap">
+                <input type="checkbox" data-filter="collection" value="global" checked onchange="applyFilters()">
+              </div>
+              <div class="filter-item-text">
+                <div class="filter-item-name">Global Series <span class="active-pill">Active</span></div>
+                <div class="filter-item-sub">9 cities, 9 tins</div>
+              </div>
+              <span class="filter-item-count">9</span>
+            </label>
+          </div>
+
+          <div class="series-divider"></div>
+
+          <div class="filter-item" style="opacity:.3;pointer-events:none;">
+            <label>
+              <div class="checkbox-wrap">
+                <input type="checkbox" disabled>
+              </div>
+              <div class="filter-item-text">
+                <span class="coming-soon">More coming soon…</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Region -->
+        <div class="filter-group">
+          <div class="filter-group-label">Region</div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="asia" onchange="applyFilters()"></div><span class="filter-item-name">Asia</span><span class="filter-item-count">5</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="americas" onchange="applyFilters()"></div><span class="filter-item-name">Americas</span><span class="filter-item-count">2</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="europe" onchange="applyFilters()"></div><span class="filter-item-name">Europe</span><span class="filter-item-count">1</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="middleeast" onchange="applyFilters()"></div><span class="filter-item-name">Middle East</span><span class="filter-item-count">1</span></label></div>
+        </div>
+
+        <!-- Flavour Profile -->
+        <div class="filter-group">
+          <div class="filter-group-label">Flavour Profile</div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="floral" onchange="applyFilters()"></div><span class="filter-item-name">Floral</span><span class="filter-item-count">3</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="spiced" onchange="applyFilters()"></div><span class="filter-item-name">Spiced</span><span class="filter-item-count">2</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="earthy" onchange="applyFilters()"></div><span class="filter-item-name">Earthy</span><span class="filter-item-count">2</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="fresh" onchange="applyFilters()"></div><span class="filter-item-name">Fresh &amp; Minty</span><span class="filter-item-count">1</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="smooth" onchange="applyFilters()"></div><span class="filter-item-name">Smooth</span><span class="filter-item-count">1</span></label></div>
+        </div>
+
+        <!-- Price -->
+        <div class="filter-group">
+          <div class="filter-group-label">Price</div>
+          <div class="price-range-track"><div class="price-range-fill"></div></div>
+          <div class="price-range-labels">
+            <span class="price-range-label">$30</span>
+            <span class="price-range-label">$60</span>
+          </div>
+        </div>
+
+        <button class="clear-btn" onclick="clearFilters()">Clear all filters</button>
+      </aside>
+
+      <!-- Grid -->
+      <div class="grid-area">
+        <div class="results-bar">
+          <span class="results-text" id="resultsText">Showing <strong>9</strong> products — Global Series</span>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+
+          <!-- 1. Singapore -->
+          <div class="product-card rv"
+            data-collection="global" data-region="asia"
+            data-flavour="floral" data-name="Kaya Rose" data-city="Singapore" data-price="38" data-order="1">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/01_singapore_kaya_rose.png" alt="Singapore Kaya Rose">
+              <div class="card-city-badge">Singapore</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Singapore</div>
+              <div class="card-name">Kaya Rose</div>
+              <div class="card-tags">
+                <span class="card-tag">Floral</span>
+                <span class="card-tag">Creamy</span>
+                <span class="card-tag">Tropical</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Singapore','Kaya Rose',38,'Brand_Assets/gurungtea_images/global_collection/01_singapore_kaya_rose.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Hong Kong -->
+          <div class="product-card rv d1"
+            data-collection="global" data-region="asia"
+            data-flavour="smooth" data-name="Silk Oolong" data-city="Hong Kong" data-price="38" data-order="2">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/02_hongkong_silk_oolong.png" alt="Hong Kong Silk Oolong">
+              <div class="card-city-badge">Hong Kong</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Hong Kong</div>
+              <div class="card-name">Silk Oolong</div>
+              <div class="card-tags">
+                <span class="card-tag">Smooth</span>
+                <span class="card-tag">Toasty</span>
+                <span class="card-tag">Delicate</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Hong Kong','Silk Oolong',38,'Brand_Assets/gurungtea_images/global_collection/02_hongkong_silk_oolong.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Seattle -->
+          <div class="product-card rv d2"
+            data-collection="global" data-region="americas"
+            data-flavour="fresh" data-name="Rainforest Mint" data-city="Seattle" data-price="38" data-order="3">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/03_seattle_rainforest_mint.png" alt="Seattle Rainforest Mint">
+              <div class="card-city-badge">Seattle</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Seattle</div>
+              <div class="card-name">Rainforest Mint</div>
+              <div class="card-tags">
+                <span class="card-tag">Fresh</span>
+                <span class="card-tag">Cooling</span>
+                <span class="card-tag">Minty</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Seattle','Rainforest Mint',38,'Brand_Assets/gurungtea_images/global_collection/03_seattle_rainforest_mint.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. London -->
+          <div class="product-card rv"
+            data-collection="global" data-region="europe"
+            data-flavour="earthy" data-name="Earl Grey Reserve" data-city="London" data-price="38" data-order="4">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/04_london_earl_grey_reserve.png" alt="London Earl Grey Reserve">
+              <div class="card-city-badge">London</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">London</div>
+              <div class="card-name">Earl Grey Reserve</div>
+              <div class="card-tags">
+                <span class="card-tag">Bergamot</span>
+                <span class="card-tag">Classic</span>
+                <span class="card-tag">Brisk</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'London','Earl Grey Reserve',38,'Brand_Assets/gurungtea_images/global_collection/04_london_earl_grey_reserve.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. New York -->
+          <div class="product-card rv d1"
+            data-collection="global" data-region="americas"
+            data-flavour="spiced" data-name="Big Apple Spice" data-city="New York" data-price="38" data-order="5">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/05_newyork_big_apple_spice.png" alt="New York Big Apple Spice">
+              <div class="card-city-badge">New York</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">New York</div>
+              <div class="card-name">Big Apple Spice</div>
+              <div class="card-tags">
+                <span class="card-tag">Bold</span>
+                <span class="card-tag">Spiced</span>
+                <span class="card-tag">Apple</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'New York','Big Apple Spice',38,'Brand_Assets/gurungtea_images/global_collection/05_newyork_big_apple_spice.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Beijing -->
+          <div class="product-card rv d2"
+            data-collection="global" data-region="asia"
+            data-flavour="earthy" data-name="Imperial Goji" data-city="Beijing" data-price="38" data-order="6">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/06_beijing_imperial_goji.png" alt="Beijing Imperial Goji">
+              <div class="card-city-badge">Beijing</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Beijing</div>
+              <div class="card-name">Imperial Goji</div>
+              <div class="card-tags">
+                <span class="card-tag">Earthy</span>
+                <span class="card-tag">Berry</span>
+                <span class="card-tag">Ancient</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Beijing','Imperial Goji',38,'Brand_Assets/gurungtea_images/global_collection/06_beijing_imperial_goji.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Mumbai -->
+          <div class="product-card rv"
+            data-collection="global" data-region="asia"
+            data-flavour="spiced" data-name="Saffron Chai" data-city="Mumbai" data-price="38" data-order="7">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/07_mumbai_saffron_chai.png" alt="Mumbai Saffron Chai">
+              <div class="card-city-badge">Mumbai</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Mumbai</div>
+              <div class="card-name">Saffron Chai</div>
+              <div class="card-tags">
+                <span class="card-tag">Spiced</span>
+                <span class="card-tag">Rich</span>
+                <span class="card-tag">Warming</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Mumbai','Saffron Chai',38,'Brand_Assets/gurungtea_images/global_collection/07_mumbai_saffron_chai.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Dubai -->
+          <div class="product-card rv d1"
+            data-collection="global" data-region="middleeast"
+            data-flavour="floral" data-name="Desert Rose" data-city="Dubai" data-price="38" data-order="8">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/08_dubai_desert_rose.png" alt="Dubai Desert Rose">
+              <div class="card-city-badge">Dubai</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Dubai</div>
+              <div class="card-name">Desert Rose</div>
+              <div class="card-tags">
+                <span class="card-tag">Floral</span>
+                <span class="card-tag">Exotic</span>
+                <span class="card-tag">Warm</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Dubai','Desert Rose',38,'Brand_Assets/gurungtea_images/global_collection/08_dubai_desert_rose.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. Tokyo -->
+          <div class="product-card rv d2"
+            data-collection="global" data-region="asia"
+            data-flavour="floral" data-name="Cherry Blossom" data-city="Tokyo" data-price="38" data-order="9">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/global_collection/09_tokyo_cherry_blossom.png" alt="Tokyo Cherry Blossom">
+              <div class="card-city-badge">Tokyo</div>
+              <div class="card-series-badge">Global Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Tokyo</div>
+              <div class="card-name">Cherry Blossom</div>
+              <div class="card-tags">
+                <span class="card-tag">Floral</span>
+                <span class="card-tag">Delicate</span>
+                <span class="card-tag">Sweet</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$38 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Tokyo','Cherry Blossom',38,'Brand_Assets/gurungtea_images/global_collection/09_tokyo_cherry_blossom.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="no-results" id="noResults">No tins match your filters. <br><button class="clear-btn" style="display:inline;margin:8px auto 0;" onclick="clearFilters()">Clear filters</button></div>
+
+        </div><!-- /product-grid -->
+      </div><!-- /grid-area -->
+
+    </div><!-- /shop-layout -->
+
+    <!-- CTA band -->
+    <div class="cta-band">
+      <div class="cta-bg-word">GURUNG</div>
+      <div class="cta-inner">
+        <h2 class="cta-heading rv">Start your<br>collection.</h2>
+        <p class="cta-sub rv d1">Each illustrated tin is a collectible — designed to live beyond the last tea bag.</p>
+        <a href="index2.html" class="cta-btn rv d2">
+          Back to Our Story
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-main">
+      <div>
+        <div class="f-logo">Gurung</div>
+        <p class="f-tagline">Himalayan Tea<br>CERES Certified Organic<br>Nepal · Community Sourced</p>
+      </div>
+      <div class="f-col">
+        <h4>Global Series</h4>
+        <ul>
+          <li><a href="#">Singapore · Kaya Rose</a></li>
+          <li><a href="#">Hong Kong · Silk Oolong</a></li>
+          <li><a href="#">Tokyo · Cherry Blossom</a></li>
+          <li><a href="#">London · Earl Grey Reserve</a></li>
+          <li><a href="#">Mumbai · Saffron Chai</a></li>
+          <li><a href="#">+ 4 more</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Brand</h4>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="index2.html#origin">The Farmers</a></li>
+          <li><a href="index2.html#values">Philosophy</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">hello@gurung.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Wholesale</a></li>
+        </ul>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <p>© 2026 Gurung Tea. All rights reserved.</p>
+      <p>CERES Certified Organic · Nepal Origin</p>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+  <script>
+    // ── Cursor ──
+    const dot  = document.getElementById('cur-dot');
+    const ring = document.getElementById('cur-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function loopRing() {
+      rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loopRing);
+    })();
+    document.querySelectorAll('a,button,.product-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.style.width = '14px'; dot.style.height = '14px';
+        ring.style.width = '50px'; ring.style.height = '50px';
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.style.width = '8px'; dot.style.height = '8px';
+        ring.style.width = '38px'; ring.style.height = '38px';
+      });
+    });
+
+    // ── Dark / Light mode ──
+    function setMode(m) {
+      document.documentElement.setAttribute('data-mode', m);
+      document.getElementById('btnDark').classList.toggle('active', m === 'dark');
+      document.getElementById('btnLight').classList.toggle('active', m === 'light');
+      localStorage.setItem('gurung-mode', m);
+    }
+    const savedMode = localStorage.getItem('gurung-mode');
+    if (savedMode) setMode(savedMode);
+
+    // ── Cart state ──
+    let cart = JSON.parse(localStorage.getItem('gurung-cart') || '[]');
+
+    function saveCart() { localStorage.setItem('gurung-cart', JSON.stringify(cart)); }
+
+    function updateCartUI() {
+      const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+      const total    = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById('cartCount').textContent = totalQty;
+      document.getElementById('cartSubtotal').textContent = '$' + total;
+
+      const itemsEl = document.getElementById('cartItems');
+      const emptyEl = document.getElementById('cartEmpty');
+
+      if (cart.length === 0) {
+        emptyEl.style.display = 'block';
+        // Remove all item nodes
+        [...itemsEl.querySelectorAll('.cart-item')].forEach(el => el.remove());
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      // Re-render all items
+      [...itemsEl.querySelectorAll('.cart-item')].forEach(el => el.remove());
+      cart.forEach((item, idx) => {
+        const el = document.createElement('div');
+        el.className = 'cart-item';
+        el.innerHTML = `
+          <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+          <div class="cart-item-info">
+            <div class="cart-item-city">${item.city}</div>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-qty-row">
+              <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+              <button class="remove-btn" onclick="removeItem(${idx})">Remove</button>
+            </div>
+          </div>
+          <span class="cart-item-price">$${item.price * item.qty}</span>
+        `;
+        itemsEl.appendChild(el);
+      });
+    }
+
+    function addToCart(btn, city, name, price, img) {
+      const existing = cart.find(i => i.name === name);
+      if (existing) { existing.qty++; }
+      else { cart.push({ city, name, price, img, qty: 1 }); }
+      saveCart(); updateCartUI(); openCart();
+      btn.textContent = 'Added!';
+      setTimeout(() => { btn.innerHTML = '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add'; }, 1200);
+    }
+
+    function changeQty(idx, delta) {
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      saveCart(); updateCartUI();
+    }
+
+    function removeItem(idx) {
+      cart.splice(idx, 1);
+      saveCart(); updateCartUI();
+    }
+
+    function openCart()  {
+      document.getElementById('cartDrawer').classList.add('open');
+      document.getElementById('cartOverlay').classList.add('open');
+    }
+    function closeCart() {
+      document.getElementById('cartDrawer').classList.remove('open');
+      document.getElementById('cartOverlay').classList.remove('open');
+    }
+    function toggleCart() {
+      document.getElementById('cartDrawer').classList.contains('open') ? closeCart() : openCart();
+    }
+
+    updateCartUI();
+
+    // ── Filters ──
+    function applyFilters() {
+      const cards = document.querySelectorAll('.product-card');
+      const checked = (attr) => [...document.querySelectorAll(`input[data-filter="${attr}"]:checked`)].map(el => el.value);
+
+      const collections = checked('collection');
+      const regions     = checked('region');
+      const flavours    = checked('flavour');
+
+      let visible = 0;
+      cards.forEach(card => {
+        const matchC = collections.length === 0 || collections.includes(card.dataset.collection);
+        const matchR = regions.length === 0     || regions.includes(card.dataset.region);
+        const matchF = flavours.length === 0    || flavours.includes(card.dataset.flavour);
+        const show = matchC && matchR && matchF;
+        card.toggleAttribute('data-hidden', !show);
+        if (show) visible++;
+      });
+
+      // Update results text
+      const collLabel = collections.length ? collections.map(c => c.charAt(0).toUpperCase() + c.slice(1) + ' Series').join(', ') : 'All Collections';
+      document.getElementById('resultsText').innerHTML = `Showing <strong>${visible}</strong> product${visible !== 1 ? 's' : ''} — ${collLabel}`;
+      document.getElementById('noResults').classList.toggle('visible', visible === 0);
+    }
+
+    function clearFilters() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if (!cb.disabled) cb.checked = false;
+      });
+      // Re-check Global Series by default
+      const globalCb = document.querySelector('input[value="global"]');
+      if (globalCb) globalCb.checked = true;
+      applyFilters();
+    }
+
+    // ── Sort ──
+    function setSort(btn, type) {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const grid = document.getElementById('productGrid');
+      const cards = [...grid.querySelectorAll('.product-card')];
+      cards.sort((a, b) => {
+        if (type === 'az')    return a.dataset.name.localeCompare(b.dataset.name);
+        if (type === 'price') return +a.dataset.price - +b.dataset.price;
+        return +a.dataset.order - +b.dataset.order; // newest = original order
+      });
+      cards.forEach(c => grid.appendChild(c));
+    }
+
+    // ── Reveal on scroll ──
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
