@@ -651,6 +651,164 @@
       display: none;
     }
     .no-results.visible { display: block; }
+
+    /* ── Touch devices: hide custom cursor + disable hover-only states ── */
+    @media (hover: none) {
+      body { cursor: auto; }
+      #cur-dot, #cur-ring { display: none; }
+      button, a, label, input[type="checkbox"] { cursor: pointer; }
+      /* Prevent flicker on tap from hover animations */
+      .product-card:hover { border-color: var(--border); }
+      .product-card:hover .card-img { transform: none; }
+      .add-btn:hover { opacity: 1; transform: none; }
+      .add-btn:hover svg { transform: none; }
+      .nav-cart:hover { opacity: 1; transform: none; }
+      .cta-btn:hover { opacity: 1; transform: none; }
+      .checkout-btn:hover { opacity: 1; transform: none; }
+    }
+
+    /* ── Filter toggle button (mobile only) ── */
+    .filter-toggle-btn {
+      display: none; align-items: center; gap: 8px;
+      background: var(--bg-up); border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 2px; cursor: pointer;
+      margin-bottom: 16px;
+      transition: border-color .2s;
+    }
+    .filter-toggle-btn:hover { border-color: var(--text-muted); }
+
+    /* ── Sidebar overlay ── */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; z-index: 440;
+      background: rgba(12,10,8,.6);
+    }
+    .sidebar-overlay.open { display: block; }
+
+    /* ── Sidebar mobile header ── */
+    .sidebar-mobile-header {
+      display: none; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-mobile-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text);
+    }
+    .sidebar-close-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid var(--border); background: transparent; cursor: pointer;
+      color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, color .2s;
+    }
+    .sidebar-close-btn:hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* ── Tablet (768–1023px) ── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      nav { padding: 16px 32px; }
+      .nav-links { gap: 24px; }
+      .hero-band { padding: 40px 32px 32px; }
+      .sidebar { width: 200px; padding: 28px 18px; }
+      .grid-area { padding: 24px 24px 60px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-main { padding: 48px 32px 36px; }
+      .footer-bottom { padding: 18px 32px; }
+      .cta-band { padding: 60px 32px; }
+    }
+
+    /* ── Mobile (≤767px) ── */
+    @media (max-width: 767px) {
+      body { cursor: auto; }
+
+      /* Touch cursors — override any cursor:none on interactive elements */
+      button, a, label, input[type="checkbox"] { cursor: pointer; }
+
+      /* Nav */
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .mode-toggle { margin-right: 6px; }
+      .mode-btn { padding: 8px 10px; font-size: 8px; min-height: 38px; }
+      .nav-cart { padding: 10px 14px; font-size: 10px; min-height: 44px; }
+
+      /* Hero band */
+      .hero-band { padding: 28px 16px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .hero-title { font-size: clamp(28px, 9vw, 48px); }
+      .hero-right { text-align: left; }
+      .hero-ghost-num { font-size: 52px; }
+
+      /* Sort row wraps on narrow screens */
+      .sort-row { flex-wrap: wrap; gap: 6px 8px; }
+      .sort-btn { padding: 8px 12px; min-height: 36px; }
+
+      /* Shop layout — sidebar becomes drawer */
+      .shop-layout { display: block; }
+      .sidebar {
+        position: fixed; top: 0; left: 0; bottom: 0; z-index: 450;
+        width: 280px; max-height: 100vh; padding-top: 20px;
+        background: var(--bg);
+        transform: translateX(-100%);
+        transition: transform .35s cubic-bezier(.16,1,.3,1);
+        border-right: 1px solid var(--border);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-mobile-header { display: flex; }
+      /* Larger close button for sidebar */
+      .sidebar-close-btn { width: 44px; height: 44px; }
+
+      /* Filter toggle — full width, taller tap target */
+      .filter-toggle-btn { display: flex; width: 100%; justify-content: center; min-height: 44px; font-size: 11px; }
+
+      /* Grid area */
+      .grid-area { padding: 16px 16px 60px; }
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+
+      /* Card adjustments */
+      .card-name { font-size: 13px; }
+      .card-body { padding: 12px 12px 14px; }
+      .card-tags { display: none; }
+      /* Stack price above button so neither is cramped in 2-col layout */
+      .card-footer { padding-top: 10px; flex-direction: column; align-items: flex-start; gap: 8px; }
+      .card-price { font-size: 15px; }
+      .add-btn { padding: 10px 14px; font-size: 9px; gap: 5px; width: 100%; justify-content: center; min-height: 40px; }
+      .card-city-badge { font-size: 7px; padding: 3px 7px; top: 8px; left: 8px; }
+      .card-series-badge { display: none; }
+
+      /* Cart drawer full-width on mobile */
+      .cart-drawer { width: 100%; border-left: none; }
+
+      /* Cart interactive elements — bigger tap targets */
+      .cart-close { width: 44px; height: 44px; border-radius: 50%; }
+      .qty-btn { width: 40px; height: 40px; font-size: 16px; }
+      .remove-btn { min-height: 36px; padding: 4px 0; display: inline-flex; align-items: center; }
+      .checkout-btn { min-height: 52px; padding: 18px 16px; }
+      .continue-btn { min-height: 48px; padding: 14px; }
+
+      /* Results bar wraps instead of overflows */
+      .results-bar { flex-wrap: wrap; gap: 8px; }
+
+      /* CTA band */
+      .cta-band { padding: 60px 20px; }
+      .cta-heading { font-size: clamp(28px, 8vw, 48px); }
+
+      /* Footer */
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 24px; padding: 40px 16px 32px; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; padding: 16px; }
+    }
+
+    /* ── Small mobile (≤480px) ── */
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+      /* Restore tags and horizontal footer on 1-col cards */
+      .card-tags { display: flex; }
+      .card-footer { flex-direction: row; align-items: center; }
+      .add-btn { width: auto; }
+      .footer-main { grid-template-columns: 1fr; }
+      nav { padding: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -661,6 +819,9 @@
 
   <!-- Cart overlay -->
   <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+  <!-- Sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
   <!-- Cart drawer -->
   <div class="cart-drawer" id="cartDrawer">
@@ -721,7 +882,7 @@
         <h1 class="hero-title rv">Somewhere<br>in Every <span class="accent">Cup.</span></h1>
       </div>
       <div class="hero-right rv d1">
-        <div class="hero-ghost-num">09</div>
+        <div class="hero-ghost-num">13</div>
         <div class="sort-row">
           <span class="sort-label">Sort:</span>
           <button class="sort-btn active" data-sort="newest" onclick="setSort(this,'newest')">Newest</button>
@@ -735,7 +896,13 @@
     <div class="shop-layout">
 
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-mobile-header">
+          <span class="sidebar-mobile-title">Filters</span>
+          <button class="sidebar-close-btn" onclick="closeSidebar()">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
         <div class="filter-heading">Filter</div>
 
         <!-- Collections -->
@@ -751,7 +918,7 @@
                 <div class="filter-item-name">Original Series</div>
                 <div class="filter-item-sub">Himalayan herbal blends</div>
               </div>
-              <span class="filter-item-count">6</span>
+              <span class="filter-item-count">4</span>
             </label>
           </div>
 
@@ -787,19 +954,19 @@
         <!-- Region -->
         <div class="filter-group">
           <div class="filter-group-label">Region</div>
-          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="asia" onchange="applyFilters()"></div><span class="filter-item-name">Asia</span><span class="filter-item-count">5</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="asia" onchange="applyFilters()"></div><span class="filter-item-name">Asia</span><span class="filter-item-count">8</span></label></div>
           <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="americas" onchange="applyFilters()"></div><span class="filter-item-name">Americas</span><span class="filter-item-count">2</span></label></div>
-          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="europe" onchange="applyFilters()"></div><span class="filter-item-name">Europe</span><span class="filter-item-count">1</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="europe" onchange="applyFilters()"></div><span class="filter-item-name">Europe</span><span class="filter-item-count">2</span></label></div>
           <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="region" value="middleeast" onchange="applyFilters()"></div><span class="filter-item-name">Middle East</span><span class="filter-item-count">1</span></label></div>
         </div>
 
         <!-- Flavour Profile -->
         <div class="filter-group">
           <div class="filter-group-label">Flavour Profile</div>
-          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="floral" onchange="applyFilters()"></div><span class="filter-item-name">Floral</span><span class="filter-item-count">3</span></label></div>
-          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="spiced" onchange="applyFilters()"></div><span class="filter-item-name">Spiced</span><span class="filter-item-count">2</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="floral" onchange="applyFilters()"></div><span class="filter-item-name">Floral</span><span class="filter-item-count">5</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="spiced" onchange="applyFilters()"></div><span class="filter-item-name">Spiced</span><span class="filter-item-count">3</span></label></div>
           <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="earthy" onchange="applyFilters()"></div><span class="filter-item-name">Earthy</span><span class="filter-item-count">2</span></label></div>
-          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="fresh" onchange="applyFilters()"></div><span class="filter-item-name">Fresh &amp; Minty</span><span class="filter-item-count">1</span></label></div>
+          <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="fresh" onchange="applyFilters()"></div><span class="filter-item-name">Fresh &amp; Minty</span><span class="filter-item-count">2</span></label></div>
           <div class="filter-item"><label><div class="checkbox-wrap"><input type="checkbox" data-filter="flavour" value="smooth" onchange="applyFilters()"></div><span class="filter-item-name">Smooth</span><span class="filter-item-count">1</span></label></div>
         </div>
 
@@ -818,6 +985,10 @@
 
       <!-- Grid -->
       <div class="grid-area">
+        <button class="filter-toggle-btn" onclick="openSidebar()">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+          Filters
+        </button>
         <div class="results-bar">
           <span class="results-text" id="resultsText">Showing <strong>9</strong> products — Global Series</span>
         </div>
@@ -1067,6 +1238,114 @@
             </div>
           </div>
 
+          <!-- 10. Everest Green -->
+          <div class="product-card rv"
+            data-collection="original" data-region="asia"
+            data-flavour="fresh" data-name="Everest Green" data-city="Nepal" data-price="34" data-order="10">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/original_series/01_everest_green.png" alt="Everest Green">
+              <div class="card-city-badge">Nepal</div>
+              <div class="card-series-badge">Original Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Nepal</div>
+              <div class="card-name">Everest Green</div>
+              <div class="card-tags">
+                <span class="card-tag">Fresh</span>
+                <span class="card-tag">Crisp</span>
+                <span class="card-tag">Alpine</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$34 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Nepal','Everest Green',34,'Brand_Assets/gurungtea_images/original_series/01_everest_green.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 11. Himalayan Chamomile -->
+          <div class="product-card rv d1"
+            data-collection="original" data-region="asia"
+            data-flavour="floral" data-name="Himalayan Chamomile" data-city="Nepal" data-price="34" data-order="11">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/original_series/02_himalayan_chamomile.png" alt="Himalayan Chamomile">
+              <div class="card-city-badge">Nepal</div>
+              <div class="card-series-badge">Original Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Nepal</div>
+              <div class="card-name">Himalayan Chamomile</div>
+              <div class="card-tags">
+                <span class="card-tag">Floral</span>
+                <span class="card-tag">Calming</span>
+                <span class="card-tag">Herbal</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$34 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Nepal','Himalayan Chamomile',34,'Brand_Assets/gurungtea_images/original_series/02_himalayan_chamomile.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 12. Spiced Masala Chai -->
+          <div class="product-card rv d2"
+            data-collection="original" data-region="asia"
+            data-flavour="spiced" data-name="Spiced Masala Chai" data-city="Nepal" data-price="34" data-order="12">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/original_series/03_spiced_masala_chai.png" alt="Spiced Masala Chai">
+              <div class="card-city-badge">Nepal</div>
+              <div class="card-series-badge">Original Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Nepal</div>
+              <div class="card-name">Spiced Masala Chai</div>
+              <div class="card-tags">
+                <span class="card-tag">Spiced</span>
+                <span class="card-tag">Bold</span>
+                <span class="card-tag">Warming</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$34 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Nepal','Spiced Masala Chai',34,'Brand_Assets/gurungtea_images/original_series/03_spiced_masala_chai.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 13. Paris Lavender Bloom -->
+          <div class="product-card rv"
+            data-collection="original" data-region="europe"
+            data-flavour="floral" data-name="Paris Lavender Bloom" data-city="Paris" data-price="34" data-order="13">
+            <div class="card-img-wrap">
+              <img class="card-img" src="Brand_Assets/gurungtea_images/original_series/04_paris_lavender_bloom.png" alt="Paris Lavender Bloom">
+              <div class="card-city-badge">Paris</div>
+              <div class="card-series-badge">Original Series</div>
+            </div>
+            <div class="card-body">
+              <div class="card-city-label">Paris</div>
+              <div class="card-name">Paris Lavender Bloom</div>
+              <div class="card-tags">
+                <span class="card-tag">Floral</span>
+                <span class="card-tag">Delicate</span>
+                <span class="card-tag">Aromatic</span>
+              </div>
+              <div class="card-footer">
+                <div class="card-price">$34 <sub>/ tin</sub></div>
+                <button class="add-btn" onclick="addToCart(this,'Paris','Paris Lavender Bloom',34,'Brand_Assets/gurungtea_images/original_series/04_paris_lavender_bloom.png')">
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="no-results" id="noResults">No tins match your filters. <br><button class="clear-btn" style="display:inline;margin:8px auto 0;" onclick="clearFilters()">Clear filters</button></div>
 
         </div><!-- /product-grid -->
@@ -1298,6 +1577,18 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.06 });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // ── Sidebar filter drawer (mobile) ──
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('sidebarOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
   </script>
 
 </body>
