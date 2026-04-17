@@ -117,7 +117,9 @@
 
     /* ── Hero ── */
     .hero {
-      position: relative; height: 100vh; min-height: 720px;
+      position: relative;
+      height: 100vh; height: 100svh;
+      min-height: 720px;
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 0 56px 80px;
       overflow: hidden;
@@ -582,6 +584,137 @@
     .rv.d2 { transition-delay: .2s; }
     .rv.d3 { transition-delay: .32s; }
     .rv.d4 { transition-delay: .44s; }
+
+    /* ── Touch devices: hide custom cursor ── */
+    @media (hover: none) {
+      body { cursor: auto; }
+      #cur-dot, #cur-ring { display: none; }
+      button, a, label, input { cursor: pointer; }
+    }
+
+    /* ── Mobile hamburger ── */
+    .nav-mobile-btn {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      position: relative; z-index: 201;
+      min-width: 44px; min-height: 44px;
+      align-items: center; justify-content: center;
+    }
+    .nav-mobile-btn span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--warm-white);
+      transition: transform .25s ease, opacity .2s ease;
+    }
+    .nav-mobile-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-mobile-btn.open span:nth-child(2) { opacity: 0; }
+    .nav-mobile-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── Mobile fullscreen menu ── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 190;
+      background: var(--obsidian);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 32px; padding: 48px 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700;
+      letter-spacing: -.025em; color: var(--warm-white); text-decoration: none;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--orange); }
+    .mobile-menu .mob-shop-btn {
+      background: var(--orange); color: var(--obsidian);
+      padding: 14px 44px; border-radius: 2px; margin-top: 8px;
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+    }
+
+    /* ── Tablet (768–1023px) ── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      nav { padding: 22px 32px; }
+      .nav-links { gap: 24px; }
+      .hero { padding: 0 32px 72px; }
+      .editorial { padding: 100px 32px; gap: 56px; }
+      .products-band { padding: 0 32px 100px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: 380px 380px 380px; }
+      .pc:first-child { grid-row: span 2; }
+      .origin-copy { padding: 80px 48px; }
+      .values-header { padding: 80px 32px 0; }
+      .values-strip { grid-template-columns: repeat(3, 1fr); }
+      .val-item:nth-child(3) { border-right: none; }
+      .val-item:nth-child(4), .val-item:nth-child(5) { border-top: 1px solid var(--border); }
+      .newsletter { padding: 80px 32px; }
+      .footer-main { padding: 56px 32px 40px; }
+      .footer-bottom { padding: 20px 32px; }
+      .cta-band { padding: 100px 48px; }
+      .wrap { padding-left: 32px; padding-right: 32px; }
+    }
+
+    /* ── Mobile (≤767px) ── */
+    @media (max-width: 767px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-btn { display: none; }
+      .nav-mobile-btn { display: flex; }
+
+      .hero { padding: 0 20px 60px; min-height: 100svh; }
+      .hero-title { font-size: clamp(52px, 14vw, 82px); }
+      .hero-row { flex-direction: column; gap: 24px; align-items: flex-start; }
+      .hero-right { align-items: flex-start; max-width: 100%; }
+      .hero-sub { text-align: left; font-size: 13px; }
+      .hero-scroll { display: none; }
+
+      .editorial { grid-template-columns: 1fr; padding: 72px 20px; gap: 48px; }
+      .img-stack { height: 320px; }
+      .img-stack-tag { right: 0; bottom: 28px; }
+      .display-heading { font-size: clamp(34px, 9vw, 52px); }
+      .body-copy { font-size: 14px; }
+
+      .products-band { padding: 0 20px 72px; }
+      .band-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .band-num { font-size: 52px; }
+      .product-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 2px; }
+      .pc:first-child { grid-row: span 1; }
+      .pc:first-child .pc-name { font-size: 19px; }
+      .pc { min-height: 260px; }
+
+      .origin { grid-template-columns: 1fr; }
+      .origin-photo { min-height: 260px; }
+      .origin-photo::after { background: linear-gradient(to bottom, transparent 60%, var(--obsidian-mid) 100%); }
+      .origin-copy { padding: 52px 20px; border-left: none; border-top: 1px solid var(--border); }
+      .stats { grid-template-columns: 1fr 1fr; margin-top: 36px; padding-top: 36px; }
+      .stat-val { font-size: 28px; }
+
+      .values-header { padding: 72px 20px 0; }
+      .values-strip { grid-template-columns: 1fr 1fr; }
+      .val-item { padding: 28px 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .val-item:nth-child(even) { border-right: none; }
+      .val-item:last-child { grid-column: span 2; border-right: none; border-bottom: none; }
+
+      .cta-band { padding: 80px 20px; }
+      .cta-bg-word { font-size: 38vw; }
+
+      .global-teaser { padding: 60px 20px !important; flex-direction: column !important; gap: 32px !important; align-items: flex-start !important; }
+
+      .newsletter { padding: 72px 20px; }
+      .nl-form { max-width: 100%; }
+
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 28px; padding: 44px 20px 36px; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; padding: 18px 20px; }
+      .wrap { padding-left: 20px; padding-right: 20px; }
+    }
+
+    /* ── Small mobile (≤480px) ── */
+    @media (max-width: 480px) {
+      .hero-title { font-size: clamp(44px, 15vw, 64px); }
+      .product-grid { grid-template-columns: 1fr; }
+      .pc { min-height: 300px; }
+      .values-strip { grid-template-columns: 1fr; }
+      .val-item { border-right: none !important; }
+      .val-item:last-child { grid-column: span 1; }
+      .footer-main { grid-template-columns: 1fr; }
+      .img-stack { height: 280px; }
+    }
   </style>
 </head>
 <body>
@@ -589,6 +722,14 @@
   <!-- Cursor -->
   <div id="cur-dot"></div>
   <div id="cur-ring"></div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#collection" onclick="closeMobileMenu()">Collection</a>
+    <a href="#origin" onclick="closeMobileMenu()">Our Origin</a>
+    <a href="#values" onclick="closeMobileMenu()">Philosophy</a>
+    <a href="shop.html" class="mob-shop-btn">Shop Now</a>
+  </div>
 
   <!-- ── Nav ── -->
   <nav>
@@ -600,6 +741,9 @@
       <li><a href="shop.html" style="color:var(--orange);">Shop →</a></li>
     </ul>
     <a href="shop.html" class="nav-btn">Shop Now</a>
+    <button class="nav-mobile-btn" id="navMobileBtn" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- ── Hero ── -->
@@ -647,8 +791,8 @@
       </div>
     </div>
     <div class="img-stack rv d1">
-      <img class="img-stack-main" src="Brand_Assets/gurungtea_images/gurungtea_09.jpg" alt="Turmeric Ginger Lemongrass Tea">
-      <img class="img-stack-inset" src="Brand_Assets/gurungtea_images/gurungtea_07.jpg" alt="Tulsi Ginger Tea">
+      <img class="img-stack-main" src="Brand_Assets/gurungtea_images/gurungtea_09.jpg" alt="Turmeric Ginger Lemongrass Tea" loading="lazy">
+      <img class="img-stack-inset" src="Brand_Assets/gurungtea_images/gurungtea_07.jpg" alt="Tulsi Ginger Tea" loading="lazy">
       <div class="img-stack-tag">CERES<br>Certified<br>Organic</div>
     </div>
   </section>
@@ -670,7 +814,7 @@
       <!-- Tall card -->
       <div class="pc rv">
         <div class="pc-img-wrap">
-          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_15.jpg" alt="Lemongrass Ginger Tea">
+          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_15.jpg" alt="Lemongrass Ginger Tea" loading="lazy">
         </div>
         <div class="pc-overlay"></div>
         <div class="pc-arrow">
@@ -685,7 +829,7 @@
       <!-- Row 1 -->
       <div class="pc rv d1">
         <div class="pc-img-wrap">
-          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_09.jpg" alt="Turmeric Ginger Lemongrass">
+          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_09.jpg" alt="Turmeric Ginger Lemongrass" loading="lazy">
         </div>
         <div class="pc-overlay"></div>
         <div class="pc-arrow">
@@ -698,7 +842,7 @@
       </div>
       <div class="pc rv d2">
         <div class="pc-img-wrap">
-          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_13.jpg" alt="Peppermint Tea">
+          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_13.jpg" alt="Peppermint Tea" loading="lazy">
         </div>
         <div class="pc-overlay"></div>
         <div class="pc-arrow">
@@ -712,7 +856,7 @@
       <!-- Row 2 -->
       <div class="pc rv d1">
         <div class="pc-img-wrap">
-          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_07.jpg" alt="Tulsi Ginger">
+          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_07.jpg" alt="Tulsi Ginger" loading="lazy">
         </div>
         <div class="pc-overlay"></div>
         <div class="pc-arrow">
@@ -725,7 +869,7 @@
       </div>
       <div class="pc rv d2">
         <div class="pc-img-wrap">
-          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_11.jpg" alt="Turmeric Ginger Chamomile">
+          <img class="pc-img" src="Brand_Assets/gurungtea_images/gurungtea_11.jpg" alt="Turmeric Ginger Chamomile" loading="lazy">
         </div>
         <div class="pc-overlay"></div>
         <div class="pc-arrow">
@@ -742,7 +886,7 @@
   <!-- ── Origin ── -->
   <section class="origin" id="origin">
     <div class="origin-photo">
-      <img src="Brand_Assets/gurungtea_images/gurungtea_22.jpg" alt="Himalayan Farmer">
+      <img src="Brand_Assets/gurungtea_images/gurungtea_22.jpg" alt="Himalayan Farmer" loading="lazy">
     </div>
     <div class="origin-copy">
       <div class="section-label teal rv">Nepal · Himalayan Foothills</div>
@@ -824,7 +968,7 @@
   </div>
 
   <!-- ── Global Collection Teaser ── -->
-  <section style="padding:80px 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:48px;">
+  <section class="global-teaser" style="padding:80px 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:48px;">
     <div>
       <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:flex;align-items:center;gap:10px;" class="rv">
         <span style="display:block;width:24px;height:1px;background:var(--orange);"></span>
@@ -965,6 +1109,23 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // ── Mobile menu ──
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileBtn  = document.getElementById('navMobileBtn');
+    function openMobileMenu() {
+      mobileMenu.classList.add('open');
+      mobileBtn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      mobileBtn.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function toggleMobileMenu() {
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    }
   </script>
 </body>
 </html>
